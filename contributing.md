@@ -12,7 +12,7 @@ Thank you for considering contributing to the Khetideals project! This marketpla
 
 - Clone your forked repository to your local machine:
   ```bash
-  git clone https://github.com/BhoomiAgrawal12/Khetideals.git
+  git clone https://github.com/<username>/Khetideals.git
   cd Khetideals
   npm install
   ```
