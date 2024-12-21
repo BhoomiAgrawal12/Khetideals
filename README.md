@@ -32,9 +32,9 @@ KhetiDeals is a comprehensive platform designed to connect farmers, buyers, shar
 - MongoDB instance running locally or remotely
 
 ### Installation
-1. Clone the repository:
+1. **Clone the repository**:
    ```bash
-https://github.com/BhoomiAgrawal12/Khetideals.git   ```
+   git clone https://github.com/BhoomiAgrawal12/Khetideals.git
 2. Navigate to the project directory:
    ```bash
    cd Khetideals
