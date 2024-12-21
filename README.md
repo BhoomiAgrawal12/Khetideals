@@ -84,8 +84,9 @@ Contributions are welcome! Please follow these steps:
    ```
 5. Open a pull request.
 
+See the [contribution](https://github.com/BhoomiAgrawal12/Khetideals/blob/main/contributing.md) for more details.
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License.
 
 ## Contact
 For any inquiries or feedback, please contact us at [email](bhoomiagrawal1212@gmail.com).
