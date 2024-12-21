@@ -34,11 +34,10 @@ KhetiDeals is a comprehensive platform designed to connect farmers, buyers, shar
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/khetideals.git
-   ```
+https://github.com/BhoomiAgrawal12/Khetideals.git   ```
 2. Navigate to the project directory:
    ```bash
-   cd khetideals
+   cd Khetideals
    ```
 3. Install dependencies:
    ```bash
