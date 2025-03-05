@@ -6,6 +6,7 @@ import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 import FarmerDashboard from "./FarmerDashboard";
+import { getAllCoordinates } from "../../../../data/user";
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: iconRetinaUrl.src,
@@ -29,6 +30,23 @@ const MapComponent: React.FC = () => {
   const addMarkers = (data: Coordinate[]) => {
     if (mapRef.current) {
       data.forEach((coord) => {
+        const lat = parseFloat(coord.latitude);
+        const lng = parseFloat(coord.longitude);
+
+        // Kamini's error handling
+        if (isNaN(lat) || isNaN(lng)) {
+          console.error("Invalid coordinates:", coord);
+          return; // Skip setting the view if coordinates are invalid
+        }
+   
+        if (!isNaN(lat) && !isNaN(lng)) {
+          mapRef.current?.setView([lat, lng], 13);
+        } else {
+          console.warn("Invalid coordinates:", coordinates);
+        }
+
+
+        
         L.marker([parseFloat(coord.latitude), parseFloat(coord.longitude)])
           .addTo(mapRef.current!)
           .openPopup()
@@ -118,7 +136,18 @@ const MapComponent: React.FC = () => {
         const firstResult = searchResults[0];
         const lat = parseFloat(firstResult.latitude);
         const lng = parseFloat(firstResult.longitude);
-        mapRef.current.setView([lat, lng], 13); // Adjust zoom level if needed
+
+        // Kamini's error handling
+        if (isNaN(lat) || isNaN(lng)) {
+          console.error("Invalid coordinates:", firstResult);
+          return; // Skip setting the view if coordinates are invalid
+        }
+        if (!isNaN(lat) && !isNaN(lng)) {
+          mapRef.current?.setView([lat, lng], 13);
+        } else {
+          console.warn("Invalid coordinates:", coordinates);
+        }
+      
 
         // Remove existing circle
         if (circleRef.current) {
