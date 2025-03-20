@@ -26,7 +26,9 @@ import FDash from "../components/FDash";
 const SettingsPage = async () => {
   const session = await auth();
 
+
   const user = session?.user.role?.toLocaleLowerCase();
+  console.log(user);
   // const coordinates = await getAllCoordinates();
   // console.log(
   //   coordinates.map((coord) => {
