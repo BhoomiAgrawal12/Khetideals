@@ -29,12 +29,22 @@ const MapComponent: React.FC = () => {
   const addMarkers = (data: Coordinate[]) => {
     if (mapRef.current) {
       data.forEach((coord) => {
-        L.marker([parseFloat(coord.latitude), parseFloat(coord.longitude)])
-          .addTo(mapRef.current!)
-          .openPopup()
-          .on("click", () => {
-            window.location.href = `/users/${coord.id}`;
-          });
+        const lat = parseFloat(coord.latitude);
+        const lng = parseFloat(coord.longitude);
+
+        // Check if lat and lng are valid numbers
+        if (!isNaN(lat) && !isNaN(lng)) {
+          L.marker([lat, lng])
+            .addTo(mapRef.current!)
+            .openPopup()
+            .on("click", () => {
+              window.location.href = `/users/${coord.id}`;
+            });
+        } else {
+          console.error(
+            `Invalid coordinates for id ${coord.id}: (${coord.latitude}, ${coord.longitude})`
+          );
+        }
       });
     }
   };
@@ -64,6 +74,14 @@ const MapComponent: React.FC = () => {
           .addTo(map)
           .bindPopup("I am here")
           .openPopup();
+
+        // Add a circle around the current location
+        L.circle([latitude, longitude], {
+          color: "blue",
+          fillColor: "#f03",
+          fillOpacity: 0.5,
+          radius: 500, // Adjust radius as needed
+        }).addTo(map);
 
         map.on("click", (event: L.LeafletMouseEvent) => {
           const latLng = event.latlng;
@@ -118,20 +136,28 @@ const MapComponent: React.FC = () => {
         const firstResult = searchResults[0];
         const lat = parseFloat(firstResult.latitude);
         const lng = parseFloat(firstResult.longitude);
-        mapRef.current.setView([lat, lng], 13); // Adjust zoom level if needed
 
-        // Remove existing circle
-        if (circleRef.current) {
-          mapRef.current.removeLayer(circleRef.current);
+        // Check if lat and lng are valid numbers
+        if (!isNaN(lat) && !isNaN(lng)) {
+          mapRef.current.setView([lat, lng], 13); // Adjust zoom level if needed
+
+          // Remove existing circle
+          if (circleRef.current) {
+            mapRef.current.removeLayer(circleRef.current);
+          }
+
+          // Add a new circle around the first filtered result
+          circleRef.current = L.circle([lat, lng], {
+            color: "blue",
+            fillColor: "#30f",
+            fillOpacity: 0.4,
+            radius: 5000, // Adjust radius as needed
+          }).addTo(mapRef.current);
+        } else {
+          console.error(
+            `Invalid coordinates for first search result: (${firstResult.latitude}, ${firstResult.longitude})`
+          );
         }
-
-        // Add a new circle around the first filtered result
-        circleRef.current = L.circle([lat, lng], {
-          color: "blue",
-          fillColor: "#30f",
-          fillOpacity: 0.4,
-          radius: 5000, // Adjust radius as needed
-        }).addTo(mapRef.current);
       }
     }
   }, [searchResults]);
